@@ -115,4 +115,8 @@ router.get("/get",async (req,res)=>
     console.log(req.body.disease)
 })
 
+router.get("/download",async (req,res)=>
+{
+    res.download("C://Users//SR096079//Downloads//certificate.pdf");
+})
 module.exports=router
