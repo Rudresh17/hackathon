@@ -69,38 +69,49 @@ let vision={"abnormalVision":{
 //sending disease data
 router.get("/get",async (req,res)=>
 {
-    let disease=(req.body.disease).toLowerCase()
-    if(disease=="cough" || disease=="COUGH"){
-        res.send(cough)
+    
+    let disease=(req.body.disease)
+    
+    if(disease!=null)
+    {
+        disease=disease.toLowerCase()
+       
+        if(disease=="cough" || disease=="COUGH"){
+            res.send(cough)
+        }
+        if(disease=="fever" || disease=="FEVER"){
+            res.send(fever)
+        }
+        if(disease=="headache" || disease=="HEADACHE"){
+            res.send(Headache)
+        }
+        if(disease=="loose stool" || disease=="LOOSE STOOL"){
+            res.send(looseStool)
+        }
+        if(disease=="sore throat" || disease=="SORE THROAT"){
+            res.send(soreThroat)
+        }
+        if(disease=="joint pain" || disease=="JOINT PAIN"){
+            res.send(jointPain)
+        }
+        if(disease=="dyspnea" || disease=="breathlessbess"){
+            res.send(dyspnea)
+        }
+        if(disease=="irregular periods" || disease=="menstrual bleeding"){
+            res.send(irregularPeriods)
+        }
+        if(disease=="skin rashes" || disease=="Eruption of skin "){
+            res.send(skin)
+        }
+        if(disease=="blurred vision" || disease=="abnormal vision"){
+            res.send(vision)
+        }
     }
-    if(disease=="fever" || disease=="FEVER"){
-        res.send(fever)
+    else
+    {
+        res.send("please enter any disease")
     }
-    if(disease=="headache" || disease=="HEADACHE"){
-        res.send(Headache)
-    }
-    if(disease=="loose stool" || disease=="LOOSE STOOL"){
-        res.send(looseStool)
-    }
-    if(disease=="sore throat" || disease=="SORE THROAT"){
-        res.send(soreThroat)
-    }
-    if(disease=="joint pain" || disease=="JOINT PAIN"){
-        res.send(jointPain)
-    }
-    if(disease=="dyspnea" || disease=="breathlessbess"){
-        res.send(dyspnea)
-    }
-    if(disease=="irregular periods" || disease=="menstrual bleeding"){
-        res.send(irregularPeriods)
-    }
-    if(disease=="skin rashes" || disease=="Eruption of skin "){
-        res.send(skin)
-    }
-    if(disease=="blurred vision" || disease=="abnormal vision"){
-        res.send(vision)
-    }
-    //res.send("on disease")
+   // res.send("on disease")
     console.log(req.body.disease)
 })
 
