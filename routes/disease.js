@@ -1,6 +1,8 @@
 const express = require("express")
 const router = express.Router()
-//const axios= require("axios")
+const axios= require("axios")
+var DomParser = require('dom-parser');
+const fs = require('fs');
 //const { Auth, LoginCredentials } = require("two-step-auth");
 //var nodemailer = require('nodemailer');
 
@@ -118,5 +120,16 @@ router.get("/get",async (req,res)=>
 router.get("/download",async (req,res)=>
 {
     res.download("C://Users//SR096079//Downloads//certificate.pdf");
+})
+router.get("/data",async (req,res)=>
+{
+    
+    let data= await axios.get("https://fhir-open.cerner.com/dstu2/ec2458f2-1e24-41c8-b71b-0e701af7583d/MedicationStatement?patient=12724066")
+    results= data.data.entry[0].resource.text.div
+    let rawdata = fs.readFileSync('sample.json');
+    let check = JSON.parse(rawdata);
+    //let text = JSON.stringify(results)
+    //text=JSON.parse(text)
+    res.send({"medications":{"source 1":check.data.medications,"source 2":results}})
 })
 module.exports=router
