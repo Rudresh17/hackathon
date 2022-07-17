@@ -35,15 +35,16 @@ router.post("/register", async (req, res) => {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       email:req.body.email,
-      password: hashPassword,
-      confirm_password:hashConfirmPassword
+      password: req.body.password,
+      confirm_password:req.body.confirm_password
     });
   
     try {
       const savedUser = await user.save();
       res.send(savedUser);
     } catch (err) {
-      res.status(400).send(err);
+      res.send({"reason":"email already exists"})
+      //res.status(400).send(err);
     }
   });
 
@@ -54,13 +55,13 @@ router.post("/login", async (req, res) => {
   
     const user = await User.findOne({ email: req.body.email });
   
-    if (!user) return res.status(400).send("Email or password is wrong");
+    if (!user) return res.status(400).send({"reason":"User does not exist"});
   
     const validPass = await bcrypt.compare(req.body.password, user.password);
-    if (!validPass) return res.status(400).send("Email or password is wrong");
+    if (!validPass) return res.status(400).send({"reason":"email or password is wrong"});
   
     //Create and assign a token
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-    res.header("auth-token", token).send(token);
+    res.header("auth-token", token).send({"isLoggedIn":"YES","token":token});
   });
 module.exports = router;
